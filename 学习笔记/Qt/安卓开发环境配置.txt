@@ -1,0 +1,16 @@
+安卓开发配置
+JDK：
+需在系统环境变量中设置JAVA_HOME指向JDK安装目录，并将%JAVA_HOME%\bin（Windows）或$JAVA_HOME/bin（macOS/Linux）添加到PATH
+
+下载Android Studio（用于配置Android SDK和Adroid NDK）
+
+Android SDK
+下载并配置Android SDK‌：在Android Studio首次启动时，安装向导会引导您下载SDK。您也可以通过File > Settings > Appearance & Behavior > System Settings > Android SDK手动管理。核心组件包括：
+‌SDK Platforms‌：选择您要支持的Android版本（如API 34 Android 14）。
+‌SDK Tools‌：务必勾选Android SDK Build-Tools、Android SDK Platform-Tools（包含adb）和Android Emulator。如需开发原生代码，还需下载NDK和CMake。‌
+在环境变量中添加%ANDROID_SDK_ROOT%，指向ANdroid SDK安装目录
+
+Adroid NDK
+‌下载并配置NDK（Native Development Kit）‌：如需使用C/C++进行开发，需下载NDK。在Android Studio的SDK Tools标签页中，勾选NDK (Side by side)并选择推荐版本（如r25b）进行安装。安装后，Android Studio会自动配置路径。‌
+
+在环境变量中添加%ANDROID_NDK_ROOT%，指向ANdroid NDK安装目录

@@ -1,0 +1,30 @@
+1.找到镜像文件并下载
+你可以在以下国内镜像站找到 qt-everywhere-src-6.5.3.zip (约1.2GB) 或 .tar.xz (约761MB) 文件：
+阿里云镜像站：https://mirrors.aliyun.com/qt/archive/qt/6.5/6.5.3/single/ 
+其他镜像：你也可以尝试访问中科大、清华等镜像站，在类似路径下查找。
+
+2.解压源码 qt-everywhere-src-6.5.3.tar.xz
+例如解压到 C:\qt\6.5.3\Src
+
+3.运行配置脚本 (configure)：这是最核心的一步。你需要告诉系统源码在哪，以及最重要的——你想把编译好的 Qt 安装到哪里
+# 命令格式: C:\路径\到\源码\configure.bat -prefix C:\你\想要\安装\的\路径
+# 请将路径替换成你的实际路径
+C:\qt\6.5.3\Src\configure.bat -prefix C:\Qt\Qt-6.5.3
+在Windows上，我们运行的是 configure.bat 脚本 。
+-prefix 同样重要，例如指定到 C:\Qt\Qt-6.5.3，确保这是一个新目录。
+其他常用配置选项：
+如果你想加快编译速度，可以只构建 release 版本，加上 -release 参数 。
+如果想跳过某些不需要的模块（如 qt3d, qtwebengine 等），可以用 -skip <模块名> 来减少编译时间和依赖 。
+如果想查看所有可用的配置选项，可以运行 ../qt-everywhere-src-6.5.3/configure --help 。
+
+4.编译 (Build)
+# 确保你还在刚才的构建目录中 (如 qt6.5.3-build 或 build)
+cmake --build . --parallel
+cmake --build .：这是标准的 CMake 构建命令，它会调用你系统默认的构建工具（如 make 或 ninja）。
+--parallel：这个参数会让编译过程使用你电脑的多个核心同时进行，可以显著加快速度 。你也可以指定核心数，如 --parallel 4。
+
+5.安装 (Install)
+cmake --install .
+
+6在 Qt Creator 中注册新版本
+安装完成后，打开你的 Qt Creator，按照我之前提到的方法，通过 工具 (Tools) -> 选项 (Options) -> 构建与运行 (Build & Run) -> Qt 版本 (Qt Versions)，点击“添加”，然后找到你新安装的目录（比如 /Users/yourname/Qt/6.5.3/bin/qmake 或 C:\Qt\Qt-6.5.3\bin\qmake.exe）并选中。这样，你就可以在项目里自由选择使用 6.5.3 还是你原来的 6.10.2 了。

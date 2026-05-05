@@ -1,0 +1,2 @@
+#SqlServer2025
+https://info.microsoft.com/ww-landing-sql-server-2025.html?lcid=zh-cn

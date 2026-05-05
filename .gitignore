@@ -1,0 +1,37 @@
+﻿# 系统文件
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# 临时文件
+*.tmp
+*.temp
+*~
+
+# Office临时文件
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# 日志文件
+*.log
+
+# 大型二进制文件
+*.pdf
+*.zip
+*.rar
+*.7z
+*.exe
+
+# 敏感信息
+*密码*.txt
+*账号*.xlsx
+*密钥*.txt
+
+# IDE配置
+.vscode/
+.idea/
+
+# Python缓存
+__pycache__/
+*.pyc

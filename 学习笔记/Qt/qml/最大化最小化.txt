@@ -1,0 +1,45 @@
+Rectangle{
+            anchors{
+                top: parent.top
+                left: parent.left
+                right:parent.right
+            }
+
+            Row{
+               Layout.alignment: Qt.AlignRight
+               Button{
+                    id: min_btn
+                    text: qsTr("-")
+                    width: 30
+                    height: 30
+                    onClicked:{
+                        window.showMinimized()
+                    }
+               }
+               Button{
+                    id: max_btn
+                    text: qsTr("口")
+                    width: 30
+                    height: 30
+                    property bool isMaximized :false
+                    onClicked:{
+                        if (isMaximized)
+                        {
+                            window.showNormal();
+                        }
+                        else{
+                            window.showMaximized()
+                        }
+                        isMaximized =!isMaximized
+                    }
+               }
+               Button{
+                    id: close_btn
+                    text: qsTr("×")
+                    width: 30
+                    height: 30
+                    onClicked:{
+                        window.close();
+                    }
+               }
+            }

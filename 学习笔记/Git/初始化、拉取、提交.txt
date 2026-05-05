@@ -1,0 +1,188 @@
+一、基础设置步骤
+1. 初始化仓库
+bash
+# 进入你的文档目录
+cd D:\sharedoc
+
+# 初始化Git仓库
+git init
+
+# 设置用户信息（第一次使用Git时需要）
+git config user.name "你的名字"
+git config user.email "你的邮箱@example.com"
+2. 创建远程仓库（以GitHub为例）
+bash
+# 添加远程仓库
+git remote add origin https://github.com/你的用户名/sharedoc.git
+
+# 如果远程仓库已有文件，先拉取
+git pull origin main --allow-unrelated-histories
+二、日常操作的注意事项
+提交时的注意事项 ⚠️
+1. 提交前先检查状态
+bash
+# 查看哪些文件被修改了
+git status
+
+# 查看具体修改内容
+git diff
+2. 合理的提交粒度
+bash
+# ❌ 不好的做法：一次提交所有更改
+git add .
+git commit -m "更新一堆文件"
+
+# ✅ 好的做法：按主题分组提交
+git add 项目管理文档.docx
+git commit -m "更新项目计划文档"
+
+git add 学习笔记/Python/
+git commit -m "添加Python学习笔记"
+3. 编写有意义的提交信息
+bash
+# ❌ 不清晰的提交信息
+git commit -m "更新"
+
+# ✅ 清晰的提交信息
+git commit -m "添加数据库设计文档v2"
+git commit -m "修复周报中的日期错误"
+git commit -m "删除过时的项目计划"
+4. 注意大文件
+bash
+# 检查是否有大文件
+git ls-files | xargs du -h | sort -h
+
+# 如果文件 >50MB，考虑使用Git LFS
+git lfs track "*.pdf"
+git lfs track "*.psd"
+拉取时的注意事项 ⚠️
+1. 提交前先拉取
+bash
+# 正确的顺序：先拉取，再提交
+git pull origin main
+git add .
+git commit -m "更新"
+git push origin main
+2. 处理冲突
+如果出现冲突，文件会变成这样：
+
+text
+<<<<<<< HEAD
+这是你的修改
+=======
+这是远程的修改
+>>>>>>> main
+解决冲突的步骤：
+
+bash
+# 1. 手动编辑文件解决冲突
+# 2. 标记为已解决
+git add 冲突文件.docx
+
+# 3. 完成合并
+git commit -m "解决冲突，合并修改"
+三、实用的.gitignore配置
+创建 .gitignore 文件在 D:\sharedoc 目录下：
+
+gitignore
+# 系统文件
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# 临时文件
+*.tmp
+*.temp
+*~
+
+# Office临时文件
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# 日志文件
+*.log
+
+# 大型二进制文件（如果不想用Git LFS）
+*.pdf
+*.mp4
+*.zip
+*.rar
+
+# 敏感信息
+*密码*.txt
+*账号*.xlsx
+
+# 特定软件缓存
+.obsidian/workspace
+.vscode/
+四、多设备同步的最佳实践
+场景1：从公司电脑提交
+bash
+# 在公司电脑
+cd D:\sharedoc
+git add .
+git commit -m "更新项目文档 - 公司"
+git push origin main
+场景2：在家里的电脑同步
+bash
+# 第一次使用（家里电脑）
+git clone https://github.com/你的用户名/sharedoc.git D:\sharedoc
+
+# 日常同步
+cd D:\sharedoc
+git pull origin main   # 获取公司提交的更新
+
+# 修改文件后
+git add .
+git commit -m "添加个人笔记 - 家里"
+git push origin main
+五、自动化脚本（推荐）
+创建 sync.bat 文件在 D:\sharedoc：
+
+batch
+@echo off
+cd /d D:\sharedoc
+
+echo 正在检查更新...
+git pull origin main
+
+echo 正在添加更改...
+git add .
+
+echo 请输入提交信息：
+set /p message="> "
+
+git commit -m "%message%"
+
+echo 正在推送到远程...
+git push origin main
+
+echo 同步完成！
+pause
+六、故障处理指南
+常见问题及解决方法
+1. 推送到远程被拒绝
+bash
+# 原因：远程有新提交，本地不是最新
+# 解决方法：
+git pull origin main --rebase
+git push origin main
+2. 不小心提交了敏感信息
+bash
+# 立即删除敏感文件
+git rm --cached 密码.txt
+echo "密码.txt" >> .gitignore
+
+# 修改最近一次提交
+git commit --amend
+
+# 强制推送（慎用！）
+git push --force origin main
+3. 恢复误删的文件
+bash
+# 查看历史版本
+git log -- 删除的文件.docx
+
+# 恢复特定版本
+git checkout 提交哈希^ -- 删除的文件.docx
